@@ -17,6 +17,7 @@ import com.pratiti.model.RegisterEbanking;
 import com.pratiti.model.RegistrationStatus;
 import com.pratiti.service.CustomerService;
 
+
 @RestController
 @CrossOrigin
 public class CustomerController {
@@ -88,6 +89,27 @@ public class CustomerController {
 		}
 		return status;
 	}
+	
+
+	@PostMapping("/login")
+	public LoginStatus login(@RequestBody CustomerLoginData customerLoginData) {
+
+	
+		LoginStatus status = new LoginStatus();
+		try {
+			Customer cust = customerService.login(customerLoginData.getUsername(), customerLoginData.getPassword());
+			status.setMes("successfully login");
+			status.setStatus(true);
+
+		
+
+		} catch (CustomerServiceException e) {
+			status.setMes(e.getMessage());
+		}
+		return status;
+
+	}
+	
 	
 //	@PostMapping("/forgot-user-id")
 //	@PostMapping("/forgot-password")
