@@ -4,16 +4,17 @@ import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+
 import org.springframework.stereotype.Service;
 
 import com.pratiti.entity.Account;
+import com.pratiti.entity.Beneficiary;
 import com.pratiti.entity.Customer;
 import com.pratiti.entity.Customer.Status;
 import com.pratiti.exception.CustomerServiceException;
 import com.pratiti.model.RegisterEbanking;
 import com.pratiti.repository.AccountRepository;
+import com.pratiti.repository.BeneficiaryRepository;
 import com.pratiti.repository.CustomerRepository;
 
 @Service
@@ -24,6 +25,9 @@ public class CustomerService {
 
 	@Autowired
 	private AccountRepository accountRepository;
+	
+	@Autowired
+	private BeneficiaryRepository beneficiaryRepository;
 
 	
 	
@@ -125,6 +129,21 @@ public class CustomerService {
 			throw new CustomerServiceException("user not exist");
 		}
 
+	}
+	
+	public Customer getCustomer(int id) {
+		Optional<Customer> customer=customerRespository.findById(id);
+		if(customer.isPresent()) {
+			return customer.get();
+		}
+		else {
+			throw new CustomerServiceException("No such customer id exists");
+		}
+		
+	}
+
+	public void addBeneficiary(Beneficiary beneficiary) {
+		beneficiaryRepository.save(beneficiary);	
 	}
 	
 	

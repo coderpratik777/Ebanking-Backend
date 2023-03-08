@@ -24,8 +24,6 @@ public class AccountService {
 	               Status status=new Status();
 	               status.setStatus(true);
 	               status.setMesssageIfAny("user present");
-	               
-	               public 
 	               return status;
 	      }
 	      else
