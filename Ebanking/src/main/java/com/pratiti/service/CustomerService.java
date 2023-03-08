@@ -4,6 +4,8 @@ import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.pratiti.entity.Account;
@@ -23,6 +25,9 @@ public class CustomerService {
 	@Autowired
 	private AccountRepository accountRepository;
 
+	
+	
+	
 	private int registrationOtp;// here we save the otp send to customer for verification
 
 	public int register(Customer customer) {
@@ -58,12 +63,26 @@ public class CustomerService {
 		if (acc.isPresent()) {
 			char[] otp = OTP(4);
 			registrationOtp = Integer.parseInt(new String(otp));
+		    
 			System.out.println("your otp is " + registrationOtp);
+		
 		} else {
+		
 			throw new CustomerServiceException("Account number does not exixt..");
 		}
 
 	}
+	
+//	public void sendEmail(String toEmail,String subject,String body) {
+//		SimpleMailMessage message=new SimpleMailMessage();
+//		message.setFrom("amitthelkar7620@gmail.com");
+//		message.setTo(toEmail);
+//		message.setText(body);
+//		message.setSubject(subject);
+//		mailSender.send(message);
+//		
+//		System.out.println("mail sent succesfully....");
+//	}
 
 	public void registerForEbanking(Account accountData, RegisterEbanking registerData) {
 		Optional<Account> account = accountRepository.findById(accountData.getAccountId());
@@ -102,9 +121,13 @@ public class CustomerService {
 			}
 
 		} else {
+			System.out.println("user not exist");
 			throw new CustomerServiceException("user not exist");
 		}
 
 	}
+	
+	
+	
 
 }

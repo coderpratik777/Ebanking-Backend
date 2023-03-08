@@ -4,7 +4,7 @@ public class Status {
 	
 	protected boolean status;
 	protected String messsageIfAny;
-	public boolean isStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 	public void setStatus(boolean status) {
