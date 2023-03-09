@@ -1,5 +1,7 @@
 package com.pratiti.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pratiti.entity.Account;
 import com.pratiti.entity.Customer;
+import com.pratiti.entity.Transaction;
 import com.pratiti.exception.CustomerServiceException;
 import com.pratiti.model.AccountStatementDetail;
 import com.pratiti.model.CustomerLoginData;
@@ -21,6 +24,7 @@ import com.pratiti.model.RegistrationStatus;
 import com.pratiti.model.Status;
 import com.pratiti.service.AccountService;
 import com.pratiti.service.CustomerService;
+import com.pratiti.service.TransactionService;
 
 @RestController
 @CrossOrigin
@@ -31,6 +35,9 @@ public class CustomerController {
 
 	@Autowired
 	private AccountService accountService;
+	
+	@Autowired
+	private TransactionService transactionService;
 
 	@PostMapping("/register")
 	public RegistrationStatus register(@RequestBody Customer customer) {
@@ -173,7 +180,22 @@ public class CustomerController {
 		return stat;
 
 	}
-
+	
+	
+	@GetMapping("/sort")
+	public List<Transaction> getAll(@RequestParam String date){
+		
+		transactionService.sort(String date);
+		
+		
+		return null;
+		
+		
+		
+		
+	}
+	
+	
 //	@PostMapping("/forgot-user-id")
 //	@PostMapping("/forgot-password")
 //	@PostMapping("/set-new-password")

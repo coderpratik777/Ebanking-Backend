@@ -30,7 +30,7 @@ public class Transaction  {
 	private Date transactionDate;
 
 	@Column(name="transaction_type")
-	private int transactionType;
+	private String transactionType;
 
 	//bi-directional many-to-one association to Account
 	@ManyToOne
@@ -70,11 +70,11 @@ public class Transaction  {
 		this.transactionDate = transactionDate;
 	}
 
-	public int getTransactionType() {
+	public String getTransactionType() {
 		return this.transactionType;
 	}
 
-	public void setTransactionType(int transactionType) {
+	public void setTransactionType(String transactionType) {
 		this.transactionType = transactionType;
 	}
 

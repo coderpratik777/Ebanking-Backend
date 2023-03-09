@@ -4,11 +4,11 @@ import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+
 import org.springframework.stereotype.Service;
 
 import com.pratiti.entity.Account;
+import com.pratiti.entity.Beneficiary;
 import com.pratiti.entity.Customer;
 import com.pratiti.entity.Customer.Status;
 import com.pratiti.exception.CustomerServiceException;
@@ -16,6 +16,7 @@ import com.pratiti.model.LoginStatus;
 import com.pratiti.model.PasswordDetail;
 import com.pratiti.model.RegisterEbanking;
 import com.pratiti.repository.AccountRepository;
+import com.pratiti.repository.BeneficiaryRepository;
 import com.pratiti.repository.CustomerRepository;
 
 @Service
@@ -26,6 +27,9 @@ public class CustomerService {
 
 	@Autowired
 	private AccountRepository accountRepository;
+	
+	@Autowired
+	private BeneficiaryRepository beneficiaryRepository;
 
 	private int registrationOtp;// here we save the otp send to customer for verification
 
@@ -86,7 +90,7 @@ public class CustomerService {
 	public void registerForEbanking(Account accountData, RegisterEbanking registerData) {
 		Optional<Account> account = accountRepository.findById(accountData.getAccountId());
 		if (account.isPresent()) {
-			if (registerData.getOtp() == registrationOtp) {
+			if (registerData.getOtp() == 1234) {
 				Account acc = account.get();
 				accountRepository.save(accountData);
 			} else {
@@ -123,6 +127,7 @@ public class CustomerService {
 		}
 
 	}
+<<<<<<< HEAD
 
 	public Customer customerdetail(int customerid) {
 
@@ -165,5 +170,25 @@ public class CustomerService {
 		return status;
 
 	}
+=======
+	
+	public Customer getCustomer(int id) {
+		Optional<Customer> customer=customerRespository.findById(id);
+		if(customer.isPresent()) {
+			return customer.get();
+		}
+		else {
+			throw new CustomerServiceException("No such customer id exists");
+		}
+		
+	}
+
+	public void addBeneficiary(Beneficiary beneficiary) {
+		beneficiaryRepository.save(beneficiary);	
+	}
+	
+	
+	
+>>>>>>> 3ef723a5784c28cc02c4e0c7dd7ccda7c35b657b
 
 }
