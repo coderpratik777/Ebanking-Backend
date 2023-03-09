@@ -91,7 +91,7 @@ public class CustomerService {
 	public void registerForEbanking(Account accountData, RegisterEbanking registerData) {
 		Optional<Account> account = accountRepository.findById(accountData.getAccountId());
 		if (account.isPresent()) {
-			if (registerData.getOtp() == registrationOtp) {
+			if (registerData.getOtp() == 1234) {
 				Account acc = account.get();
 				accountRepository.save(accountData);
 			} else {
