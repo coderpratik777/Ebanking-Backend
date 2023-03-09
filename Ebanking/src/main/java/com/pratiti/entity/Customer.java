@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pratiti.entity.Customer.Status;
 
 @Entity
@@ -59,13 +60,16 @@ public class Customer  {
 
 	//bi-directional many-to-one association to Beneficiary
 	@OneToMany(mappedBy="customer")
+	@JsonIgnore
 	private List<Beneficiary> beneficiaries;
 
 	//bi-directional many-to-one association to Transaction
 	@OneToMany(mappedBy="customer")
+	@JsonIgnore
 	private List<Transaction> transactions;
 	
 	@OneToOne(mappedBy = "customer")
+	@JsonIgnore
 	private Account account;
 	
 	@Enumerated(EnumType.STRING) //we specify this to store the data of the enum value in database	

@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Transaction  {
 	
@@ -33,6 +35,7 @@ public class Transaction  {
 	//bi-directional many-to-one association to Account
 	@ManyToOne
 	@JoinColumn(name="account_number")
+	@JsonIgnore
 	private Account account;
 
 	//bi-directional many-to-one association to Customer

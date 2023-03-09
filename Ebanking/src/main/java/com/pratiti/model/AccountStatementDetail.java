@@ -7,7 +7,15 @@ public class AccountStatementDetail {
 	private String accountType;
 	private float balance;
 	
+	private int customerid;
 	
+	
+	public int getCustomerid() {
+		return customerid;
+	}
+	public void setCustomerid(int customerid) {
+		this.customerid = customerid;
+	}
 	public int getAccountNumber() {
 		return accountNumber;
 	}
