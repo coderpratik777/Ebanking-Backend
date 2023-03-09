@@ -127,7 +127,7 @@ public class CustomerService {
 		}
 
 	}
-<<<<<<< HEAD
+
 
 	public Customer customerdetail(int customerid) {
 
@@ -170,7 +170,7 @@ public class CustomerService {
 		return status;
 
 	}
-=======
+
 	
 	public Customer getCustomer(int id) {
 		Optional<Customer> customer=customerRespository.findById(id);
@@ -189,6 +189,6 @@ public class CustomerService {
 	
 	
 	
->>>>>>> 3ef723a5784c28cc02c4e0c7dd7ccda7c35b657b
+
 
 }

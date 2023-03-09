@@ -181,19 +181,7 @@ public class CustomerController {
 
 	}
 	
-	
-	@GetMapping("/sort")
-	public List<Transaction> getAll(@RequestParam String date){
-		
-		transactionService.sort(String date);
-		
-		
-		return null;
-		
-		
-		
-		
-	}
+
 	
 	
 //	@PostMapping("/forgot-user-id")
