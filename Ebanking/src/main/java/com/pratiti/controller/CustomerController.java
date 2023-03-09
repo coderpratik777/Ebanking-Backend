@@ -1,6 +1,10 @@
 package com.pratiti.controller;
 
+
 import javax.security.auth.login.AccountException;
+
+import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -14,16 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pratiti.entity.Account;
 import com.pratiti.entity.Beneficiary;
 import com.pratiti.entity.Customer;
+import com.pratiti.entity.Transaction;
 import com.pratiti.exception.CustomerServiceException;
 import com.pratiti.model.AccountStatementDetail;
 import com.pratiti.model.BeneficiaryData;
 import com.pratiti.model.CustomerLoginData;
 import com.pratiti.model.LoginStatus;
+import com.pratiti.model.PasswordDetail;
 import com.pratiti.model.RegisterEbanking;
 import com.pratiti.model.RegistrationStatus;
 import com.pratiti.model.Status;
 import com.pratiti.service.AccountService;
 import com.pratiti.service.CustomerService;
+import com.pratiti.service.TransactionService;
 
 @RestController
 @CrossOrigin
@@ -34,6 +41,9 @@ public class CustomerController {
 
 	@Autowired
 	private AccountService accountService;
+	
+	@Autowired
+	private TransactionService transactionService;
 
 	@PostMapping("/createaccount")
 	public RegistrationStatus register(@RequestBody Customer customer) {
@@ -53,6 +63,12 @@ public class CustomerController {
 
 		}
 	}
+
+
+//	@PostMapping("/login")
+//	public LoginStatus login(@RequestBody CustomerLoginData customerData) {
+//		
+//	}
 
 	@GetMapping("/verifyaccount")
 	public RegistrationStatus verifyAccount(@RequestParam("accountnumber") int accountNumber) {
@@ -98,8 +114,11 @@ public class CustomerController {
 		LoginStatus status = new LoginStatus();
 		try {
 			Customer cust = customerService.login(customerLoginData.getUsername(), customerLoginData.getPassword());
+			Account custno = accountService.findByUsername(customerLoginData.getUsername());
+
 			status.setMes("successfully login");
 			status.setStatus(true);
+			status.setCustomerid(custno.getCustomer().getCustomerId());
 
 		} catch (CustomerServiceException e) {
 			status.setMes(e.getMessage());
@@ -110,14 +129,14 @@ public class CustomerController {
 
 	@GetMapping("/generateOtp")
 	public Status generateOtp(@RequestParam int accountNumber) {
-		Status status=new Status();
-		
+		Status status = new Status();
+
 		try {
-			status=accountService.forgotpassword(accountNumber);
-			if(status.getStatus()==true) {
+			status = accountService.forgotpassword(accountNumber);
+			if (status.getStatus() == true) {
 				System.out.println("generate otp");
 			}
-			
+
 		} catch (CustomerServiceException e) {
 			System.out.println(e.getMessage());
 		}
@@ -125,24 +144,49 @@ public class CustomerController {
 		return status;
 
 	}
-	
+
 	@GetMapping("/accountstatement")
-	public AccountStatementDetail accountStatement(@RequestParam int accountNumber)
-	{
-		AccountStatementDetail accountdetails=new AccountStatementDetail();
-	
+	public AccountStatementDetail accountStatement(@RequestParam String username) {
+		AccountStatementDetail accountdetails = new AccountStatementDetail();
+
 		try {
-			accountdetails=accountService.findDetails(accountNumber);
-			
-			
-			
+			accountdetails = accountService.findDetails(username);
+
 		} catch (CustomerServiceException e) {
 			System.out.println(e.getMessage());
 		}
 		return accountdetails;
-		
-		
-		
+
+	}
+
+	@GetMapping("/userprofile")
+	public Customer customerdetail(@RequestParam int customerid) {
+		Customer cust = new Customer();
+		try {
+			cust = customerService.customerdetail(customerid);
+			return cust;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return cust;
+
+	}
+
+	@PostMapping("/changepassword")
+	public LoginStatus changepassword(@RequestBody PasswordDetail passwordDetail) {
+
+		System.out.println(passwordDetail);
+		LoginStatus stat = new LoginStatus();
+		try {
+
+			stat = customerService.changepassword(passwordDetail);
+			
+
+		} catch (CustomerServiceException e) {
+			System.out.println(e.getMessage());
+		}
+		return stat;
+
 	}
 	
 	@PostMapping("/addbeneficiary")
@@ -173,6 +217,14 @@ public class CustomerController {
 		return customerService.getAccount(id);
 	}
 
+
+
 	
+	
+//	@PostMapping("/forgot-user-id")
+//	@PostMapping("/forgot-password")
+//	@PostMapping("/set-new-password")
+//	
+//	
 
 }

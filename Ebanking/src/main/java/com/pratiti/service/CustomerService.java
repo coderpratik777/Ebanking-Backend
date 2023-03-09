@@ -12,6 +12,8 @@ import com.pratiti.entity.Beneficiary;
 import com.pratiti.entity.Customer;
 import com.pratiti.entity.Customer.Status;
 import com.pratiti.exception.CustomerServiceException;
+import com.pratiti.model.LoginStatus;
+import com.pratiti.model.PasswordDetail;
 import com.pratiti.model.RegisterEbanking;
 import com.pratiti.repository.AccountRepository;
 import com.pratiti.repository.BeneficiaryRepository;
@@ -29,9 +31,6 @@ public class CustomerService {
 	@Autowired
 	private BeneficiaryRepository beneficiaryRepository;
 
-	
-	
-	
 	private int registrationOtp;// here we save the otp send to customer for verification
 
 	public int register(Customer customer) {
@@ -67,16 +66,16 @@ public class CustomerService {
 		if (acc.isPresent()) {
 			char[] otp = OTP(4);
 			registrationOtp = Integer.parseInt(new String(otp));
-		    
+
 			System.out.println("your otp is " + registrationOtp);
-		
+
 		} else {
-		
+
 			throw new CustomerServiceException("Account number does not exixt..");
 		}
 
 	}
-	
+
 //	public void sendEmail(String toEmail,String subject,String body) {
 //		SimpleMailMessage message=new SimpleMailMessage();
 //		message.setFrom("amitthelkar7620@gmail.com");
@@ -106,11 +105,9 @@ public class CustomerService {
 	}
 
 	public Customer login(String username, String password) {
-
 		if (accountRepository.existsByUsername(username)) {
 			Optional<Account> account = accountRepository.findByUsername(username);
 			Account accountdata = account.get();
-
 			if (accountdata.getCustomer().getStatus() != Status.INACTIVE) {
 				if (password.equals(accountdata.getPassword())) {
 					System.out.println("successfully login");
@@ -130,6 +127,50 @@ public class CustomerService {
 		}
 
 	}
+
+
+	public Customer customerdetail(int customerid) {
+
+		Optional<Customer> cust = customerRespository.findByCustomerId(customerid);
+		Customer customer = cust.get();
+		return customer;
+	}
+
+	public LoginStatus changepassword(PasswordDetail passdetail) {
+
+		LoginStatus status = new LoginStatus();
+		if (accountRepository.existsByUsername(passdetail.getUsername())) {
+			Optional<Account> acc = accountRepository.findByUsername(passdetail.getUsername());
+			Account account = acc.get();
+
+			if (passdetail.getOldpassword().equals(account.getPassword())) {
+				if (passdetail.getPassword().equals(passdetail.getConfirmpassword())) {
+					status.setStatus(true);
+					status.setMes("password changed successfully");
+					account.setPassword(passdetail.getPassword());
+
+					accountRepository.save(account);
+					System.out.println(account.getPassword());
+
+					System.out.println("password changed successfully");
+
+				} else {
+					status.setMes("Password Not Match");
+					throw new CustomerServiceException("Password Not Match");
+				}
+
+			} else {
+				status.setMes("Enter Valid Old Password");
+				throw new CustomerServiceException("Enter Valid Old Password");
+			}
+		} else {
+			status.setMes("user not present");
+			throw new CustomerServiceException("user not present");
+		}
+		return status;
+
+	}
+
 	
 	public Customer getCustomer(int id) {
 		Optional<Customer> customer=customerRespository.findById(id);
@@ -154,5 +195,6 @@ public class CustomerService {
 	
 	
 	
+
 
 }
