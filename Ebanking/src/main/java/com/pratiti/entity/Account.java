@@ -28,6 +28,10 @@ public class Account  {
 	private String password;
 
 	private String username;
+	
+	private int transactionPin;
+
+	
 
 	@OneToOne
 	@JoinColumn(name="customer_id")
@@ -108,6 +112,13 @@ public class Account  {
 		transaction.setAccount(null);
 
 		return transaction;
+	}
+	public int getTransactionPin() {
+		return transactionPin;
+	}
+
+	public void setTransactionPin(int transactionPin) {
+		this.transactionPin = transactionPin;
 	}
 
 }

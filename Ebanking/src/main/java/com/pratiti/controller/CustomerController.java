@@ -1,5 +1,7 @@
 package com.pratiti.controller;
 
+import javax.security.auth.login.AccountException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,7 +35,7 @@ public class CustomerController {
 	@Autowired
 	private AccountService accountService;
 
-	@PostMapping("/register")
+	@PostMapping("/createaccount")
 	public RegistrationStatus register(@RequestBody Customer customer) {
 		RegistrationStatus status = new RegistrationStatus();
 		try {
@@ -52,7 +54,7 @@ public class CustomerController {
 		}
 	}
 
-	@GetMapping("verifyaccount")
+	@GetMapping("/verifyaccount")
 	public RegistrationStatus verifyAccount(@RequestParam("accountnumber") int accountNumber) {
 		RegistrationStatus status = new RegistrationStatus();
 		try {
@@ -79,6 +81,7 @@ public class CustomerController {
 			acc.setAccountId(registerEbanking.getAccountNumber());
 			acc.setUsername(registerEbanking.getUsername());
 			acc.setPassword(registerEbanking.getPassword());
+			acc.setTransactionPin(registerEbanking.getTransactionPin());
 			customerService.registerForEbanking(acc, registerEbanking);
 			status.setMesssageIfAny("Registration succesfull!");
 			status.setStatus(true);
@@ -165,10 +168,11 @@ public class CustomerController {
 		return status;
 		
 	}
-//	@PostMapping("/forgot-user-id")
-//	@PostMapping("/forgot-password")
-//	@PostMapping("/set-new-password")
-	
+	@GetMapping("/fetchaccount")
+	public Account fetchAccount(@RequestParam("customerid") int id) {
+		return customerService.getAccount(id);
+	}
+
 	
 
 }
