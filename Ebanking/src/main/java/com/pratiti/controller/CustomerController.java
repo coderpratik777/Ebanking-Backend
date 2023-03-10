@@ -153,14 +153,12 @@ public class CustomerController {
 
 	@GetMapping("/userprofile")
 	public Customer customerdetail(@RequestParam int customerid) {
-		Customer cust = new Customer();
-		try {
+		Customer cust =null;
+		
 			cust = customerService.customerdetail(customerid);
 			return cust;
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return cust;
+		
+		
 
 	}
 
@@ -184,10 +182,5 @@ public class CustomerController {
 
 	
 	
-//	@PostMapping("/forgot-user-id")
-//	@PostMapping("/forgot-password")
-//	@PostMapping("/set-new-password")
-//	
-//	
 
 }
