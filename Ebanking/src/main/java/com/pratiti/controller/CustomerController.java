@@ -1,6 +1,10 @@
 package com.pratiti.controller;
 
+
+import javax.security.auth.login.AccountException;
+
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -12,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pratiti.entity.Account;
+import com.pratiti.entity.Beneficiary;
 import com.pratiti.entity.Customer;
 import com.pratiti.entity.Transaction;
 import com.pratiti.exception.CustomerServiceException;
 import com.pratiti.model.AccountStatementDetail;
+import com.pratiti.model.BeneficiaryData;
 import com.pratiti.model.CustomerLoginData;
 import com.pratiti.model.LoginStatus;
 import com.pratiti.model.PasswordDetail;
@@ -39,7 +45,7 @@ public class CustomerController {
 	@Autowired
 	private TransactionService transactionService;
 
-	@PostMapping("/register")
+	@PostMapping("/createaccount")
 	public RegistrationStatus register(@RequestBody Customer customer) {
 		RegistrationStatus status = new RegistrationStatus();
 		try {
@@ -58,12 +64,13 @@ public class CustomerController {
 		}
 	}
 
+
 //	@PostMapping("/login")
 //	public LoginStatus login(@RequestBody CustomerLoginData customerData) {
 //		
 //	}
 
-	@GetMapping("verifyaccount")
+	@GetMapping("/verifyaccount")
 	public RegistrationStatus verifyAccount(@RequestParam("accountnumber") int accountNumber) {
 		RegistrationStatus status = new RegistrationStatus();
 		try {
@@ -90,6 +97,7 @@ public class CustomerController {
 			acc.setAccountId(registerEbanking.getAccountNumber());
 			acc.setUsername(registerEbanking.getUsername());
 			acc.setPassword(registerEbanking.getPassword());
+			acc.setTransactionPin(registerEbanking.getTransactionPin());
 			customerService.registerForEbanking(acc, registerEbanking);
 			status.setMesssageIfAny("Registration succesfull!");
 			status.setStatus(true);
@@ -179,6 +187,39 @@ public class CustomerController {
 
 	}
 	
+	@PostMapping("/addbeneficiary")
+	public Status addBeneficiary(@RequestBody BeneficiaryData beneficiaryData) {
+		Status status=new Status();
+		try {
+			//int id =beneficiaryData.getCutomerId();
+			//Customer cust=customerService.getCustomer(id);
+			Beneficiary beneficiary=new Beneficiary();
+			beneficiary.setAccountNumber(beneficiaryData.getAccountNumber());
+			beneficiary.setName(beneficiaryData.getName());
+			beneficiary.setNickName(beneficiaryData.getNickName());
+//			beneficiary.setCustomer(cust);
+			customerService.addBeneficiary(beneficiary);
+			status.setMesssageIfAny("Successfully added beneficiary !");
+			status.setStatus(true);
+			
+		}
+		catch(CustomerServiceException e) {
+			status.setMesssageIfAny(e.getMessage());
+			status.setStatus(false);
+		}
+		return status;
+		
+	}
+	@GetMapping("/fetchaccount")
+	public Account fetchAccount(@RequestParam("customerid") int id) {
+		return customerService.getAccount(id);
+	}
+	
+//	@GetMapping("/fetchbeneficiaries")
+////	public Beneficiary fetchBeneficiary(@RequestParam("customerid") int id) {
+////		return 
+////	}
+
 
 	
 	

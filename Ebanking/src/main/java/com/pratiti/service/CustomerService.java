@@ -187,6 +187,16 @@ public class CustomerService {
 		beneficiaryRepository.save(beneficiary);	
 	}
 	
+	public Account getAccount(int id) {
+		Optional<Customer> customer=customerRespository.findById(id);
+		Account acc=customer.get().getAccount();
+		return acc;
+	}
+	
+//	public fetchBenficiary(int id) {
+//		
+//	}
+	
 	
 	
 

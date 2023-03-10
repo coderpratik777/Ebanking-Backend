@@ -31,9 +31,12 @@ public class TransactionService {
 	
 	public int transaction(TransactionData data) {
 		Optional<Account> account=accountRepository.findById(data.getFromAccount());
+		Optional<Account> account2=accountRepository.findById(data.getToAccount());
 		if(account.isPresent()) {
 			Account acc=new Account();
+			Account acc2=new Account();
 			acc=account.get();
+			acc2=account2.get();
 			float balance=acc.getCurrentBalance();
 			if(data.getAmount()<balance) {
 				float updatedBalance=balance-data.getAmount();
@@ -42,9 +45,9 @@ public class TransactionService {
 				transaction.setTransactionAmount(data.getAmount());
 				transaction.setTransactionDate(data.getTransactionDate());
 				transaction.setTransactionType(data.getTransactionType());
-				transaction.setAccount(acc);
 				transaction.setCustomer(acc.getCustomer());
-				
+				transaction.setSenderAccount(acc);
+				transaction.setReceiverAccount(acc2);
 				transactionRepoository.save(transaction);
 				return transaction.getTransactionId();
 				

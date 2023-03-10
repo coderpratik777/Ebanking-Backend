@@ -28,14 +28,24 @@ public class Account  {
 	private String password;
 
 	private String username;
+	
+	private int transactionPin;
+
+	
 
 	@OneToOne
 	@JoinColumn(name="customer_id")
 	private Customer customer;
 
 	//bi-directional many-to-one association to Transaction
-	@OneToMany(mappedBy="account")
-	private List<Transaction> transactions;
+//	@OneToMany(mappedBy="account")
+//	private List<Transaction> transactions;
+	
+	@OneToOne(mappedBy="senderAccount")
+	private Transaction senderTransaction;
+	
+	@OneToOne(mappedBy = "receiverAccount")
+	private Transaction receiverTransaction;
 
 	public Account() {
 	}
@@ -88,26 +98,33 @@ public class Account  {
 		this.customer = customer;
 	}
 
-	public List<Transaction> getTransactions() {
-		return this.transactions;
+//	public List<Transaction> getTransactions() {
+//		return this.transactions;
+//	}
+//
+//	public void setTransactions(List<Transaction> transactions) {
+//		this.transactions = transactions;
+//	}
+//
+//	public Transaction addTransaction(Transaction transaction) {
+//		getTransactions().add(transaction);
+//		transaction.setAccount(this);
+//
+//		return transaction;
+//	}
+//
+//	public Transaction removeTransaction(Transaction transaction) {
+//		getTransactions().remove(transaction);
+//		transaction.setAccount(null);
+//
+//		return transaction;
+//	}
+	public int getTransactionPin() {
+		return transactionPin;
 	}
 
-	public void setTransactions(List<Transaction> transactions) {
-		this.transactions = transactions;
-	}
-
-	public Transaction addTransaction(Transaction transaction) {
-		getTransactions().add(transaction);
-		transaction.setAccount(this);
-
-		return transaction;
-	}
-
-	public Transaction removeTransaction(Transaction transaction) {
-		getTransactions().remove(transaction);
-		transaction.setAccount(null);
-
-		return transaction;
+	public void setTransactionPin(int transactionPin) {
+		this.transactionPin = transactionPin;
 	}
 
 }
