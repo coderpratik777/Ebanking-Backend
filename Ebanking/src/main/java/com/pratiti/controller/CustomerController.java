@@ -216,7 +216,11 @@ public class CustomerController {
 	public Account fetchAccount(@RequestParam("customerid") int id) {
 		return customerService.getAccount(id);
 	}
-
+	
+//	@GetMapping("/fetchbeneficiaries")
+////	public Beneficiary fetchBeneficiary(@RequestParam("customerid") int id) {
+////		return 
+////	}
 
 
 	

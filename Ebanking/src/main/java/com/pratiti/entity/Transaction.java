@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -33,10 +34,36 @@ public class Transaction  {
 	private String transactionType;
 
 	//bi-directional many-to-one association to Account
-	@ManyToOne
-	@JoinColumn(name="account_number")
-	@JsonIgnore
-	private Account account;
+//	@ManyToOne
+//	@JoinColumn(name="account_number")
+//	@JsonIgnore
+//	private Account account;
+	
+	@OneToOne
+	@JoinColumn(name="sender_account")
+	private Account senderAccount;
+	
+	@OneToOne
+	@JoinColumn(name="receiver_account")
+	private Account receiverAccount;
+	
+	
+
+	public Account getSenderAccount() {
+		return senderAccount;
+	}
+
+	public void setSenderAccount(Account senderAccount) {
+		this.senderAccount = senderAccount;
+	}
+
+	public Account getReceiverAccount() {
+		return receiverAccount;
+	}
+
+	public void setReceiverAccount(Account receiverAccount) {
+		this.receiverAccount = receiverAccount;
+	}
 
 	//bi-directional many-to-one association to Customer
 	@ManyToOne
@@ -78,13 +105,13 @@ public class Transaction  {
 		this.transactionType = transactionType;
 	}
 
-	public Account getAccount() {
-		return this.account;
-	}
-
-	public void setAccount(Account account) {
-		this.account = account;
-	}
+//	public Account getAccount() {
+//		return this.account;
+//	}
+//
+//	public void setAccount(Account account) {
+//		this.account = account;
+//	}
 
 	public Customer getCustomer() {
 		return this.customer;
