@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Address  {
 
@@ -30,6 +32,7 @@ public class Address  {
 	//bi-directional many-to-one association to Customer
 	@OneToOne
 	@JoinColumn(name="customer_id")
+	@JsonIgnore
 	private Customer customer;
 
 	public Address() {

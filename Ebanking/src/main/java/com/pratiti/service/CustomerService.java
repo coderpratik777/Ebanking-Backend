@@ -1,5 +1,6 @@
 package com.pratiti.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -27,7 +28,7 @@ public class CustomerService {
 
 	@Autowired
 	private AccountRepository accountRepository;
-	
+
 	@Autowired
 	private BeneficiaryRepository beneficiaryRepository;
 
@@ -128,9 +129,8 @@ public class CustomerService {
 
 	}
 
-
 	public Customer customerdetail(int customerid) {
-     System.out.println(customerid);
+		System.out.println(customerid);
 		Optional<Customer> cust = customerRespository.findById(customerid);
 		Customer customer = cust.get();
 		return customer;
@@ -171,34 +171,57 @@ public class CustomerService {
 
 	}
 
-	
 	public Customer getCustomer(int id) {
-		Optional<Customer> customer=customerRespository.findById(id);
-		if(customer.isPresent()) {
+		Optional<Customer> customer = customerRespository.findById(id);
+		if (customer.isPresent()) {
 			return customer.get();
-		}
-		else {
+		} else {
 			throw new CustomerServiceException("No such customer id exists");
 		}
-		
+
 	}
 
 	public void addBeneficiary(Beneficiary beneficiary) {
-		beneficiaryRepository.save(beneficiary);	
+		beneficiaryRepository.save(beneficiary);
 	}
-	
+
 	public Account getAccount(int id) {
-		Optional<Customer> customer=customerRespository.findById(id);
-		Account acc=customer.get().getAccount();
+		Optional<Customer> customer = customerRespository.findById(id);
+		Account acc = customer.get().getAccount();
 		return acc;
 	}
-	
+
 //	public fetchBenficiary(int id) {
 //		
 //	}
-	
-	
-	
 
+	public List<Customer> getAllCustomers() {
+
+		return customerRespository.findAll();
+		 
+	}
+
+	public void deleteCustomerById(int customerId) {
+		Optional<Customer> customer = customerRespository.findById(customerId);
+		if (customer.isPresent()) {
+			customerRespository.delete(customer.get());
+		} else {
+//			throw new EntityNotFoundException("Customer not found.....");
+		}
+	}
+
+	public Customer updateCustomerById(int customerId, Customer customer) {
+		Optional<Customer> optionalCustomer = customerRespository.findById(customerId);
+		if (optionalCustomer.isPresent()) {
+			Customer existingCustomer = optionalCustomer.get();
+			existingCustomer.setAddharCardNumber(customer.getAddharCardNumber());
+			existingCustomer.setFirstName(customer.getFirstName());
+			existingCustomer.setDateOfBirth(customer.getDateOfBirth());
+			existingCustomer.setLastName(customer.getLastName());
+			existingCustomer.setEmail(customer.getEmail());
+			return customerRespository.save(existingCustomer);
+		}
+//		throw new EntityNotFoundException("User not found");
+	}
 
 }
