@@ -1,5 +1,6 @@
 package com.pratiti.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -106,8 +107,9 @@ public class CustomerService {
 
 	public Customer login(String username, String password) {
 		if (accountRepository.existsByUsername(username)) {
-			Optional<Account> account = accountRepository.findByUsername(username);
-			Account accountdata = account.get();
+			//Optional<Account> account = accountRepository.findByUsername(username);
+			//Account accountdata = account.get();
+			Account accountdata = accountRepository.findByUsername2(username).get(0);
 			if (accountdata.getCustomer().getStatus() != Status.INACTIVE) {
 				if (password.equals(accountdata.getPassword())) {
 					System.out.println("successfully login");
@@ -188,14 +190,16 @@ public class CustomerService {
 	}
 	
 	public Account getAccount(int id) {
-		Optional<Customer> customer=customerRespository.findById(id);
-		Account acc=customer.get().getAccount();
-		return acc;
+		//Optional<Customer> customer=customerRespository.findById(id);
+		Optional<Account> account=accountRepository.findByCustomer(id);
+		return account.get();
 	}
 	
-//	public fetchBenficiary(int id) {
-//		
-//	}
+	public List<Beneficiary> fetchBenficiary(int id) {
+		List<Beneficiary> beneficiary=beneficiaryRepository.findByCustomerId(id);
+		return beneficiary;
+		
+	}
 	
 	
 	

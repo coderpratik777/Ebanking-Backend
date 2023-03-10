@@ -41,6 +41,7 @@ public class TransactionService {
 			if(data.getAmount()<balance) {
 				float updatedBalance=balance-data.getAmount();
 				acc.setCurrentBalance(updatedBalance);
+				acc2.setCurrentBalance(acc2.getCurrentBalance()+data.getAmount());
 				Transaction transaction=new Transaction();
 				transaction.setTransactionAmount(data.getAmount());
 				transaction.setTransactionDate(data.getTransactionDate());

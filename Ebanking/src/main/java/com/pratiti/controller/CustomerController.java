@@ -214,13 +214,14 @@ public class CustomerController {
 	}
 	@GetMapping("/fetchaccount")
 	public Account fetchAccount(@RequestParam("customerid") int id) {
-		return customerService.getAccount(id);
+		 Account acc=customerService.getAccount(id);
+		 return acc;
 	}
 	
-//	@GetMapping("/fetchbeneficiaries")
-////	public Beneficiary fetchBeneficiary(@RequestParam("customerid") int id) {
-////		return 
-////	}
+	@GetMapping("/fetchbeneficiaries")
+	public List<Beneficiary> fetchBeneficiary(@RequestParam("customerid") int id) {
+		return customerService.fetchBenficiary(id);
+	}
 
 
 	
