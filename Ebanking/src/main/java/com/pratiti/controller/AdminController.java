@@ -1,5 +1,6 @@
 package com.pratiti.controller;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,11 @@ import com.pratiti.repository.CustomerRepository;
 import com.pratiti.service.AccountService;
 import com.pratiti.service.CustomerService;
 import com.pratiti.service.TransactionService;
+
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 @CrossOrigin

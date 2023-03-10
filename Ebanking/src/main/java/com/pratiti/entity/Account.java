@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Account  {
 
@@ -35,17 +37,20 @@ public class Account  {
 
 	@OneToOne
 	@JoinColumn(name="customer_id")
+	@JsonIgnore
 	private Customer customer;
 
 	//bi-directional many-to-one association to Transaction
 //	@OneToMany(mappedBy="account")
 //	private List<Transaction> transactions;
 	
-	@OneToOne(mappedBy="senderAccount")
-	private Transaction senderTransaction;
+	@OneToMany(mappedBy="senderAccount")
+	@JsonIgnore
+	private List<Transaction> senderTransactions;
 	
-	@OneToOne(mappedBy = "receiverAccount")
-	private Transaction receiverTransaction;
+	@OneToMany(mappedBy = "receiverAccount")
+	@JsonIgnore
+	private List<Transaction> receiverTransactions;
 
 	public Account() {
 	}
@@ -126,5 +131,23 @@ public class Account  {
 	public void setTransactionPin(int transactionPin) {
 		this.transactionPin = transactionPin;
 	}
+
+	public List<Transaction> getSenderTransactions() {
+		return senderTransactions;
+	}
+
+	public void setSenderTransactions(List<Transaction> senderTransactions) {
+		this.senderTransactions = senderTransactions;
+	}
+
+	public List<Transaction> getReceiverTransactions() {
+		return receiverTransactions;
+	}
+
+	public void setReceiverTransactions(List<Transaction> receiverTransactions) {
+		this.receiverTransactions = receiverTransactions;
+	}
+	
+	
 
 }

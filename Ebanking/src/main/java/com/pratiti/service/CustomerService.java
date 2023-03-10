@@ -191,37 +191,15 @@ public class CustomerService {
 		return acc;
 	}
 
-//	public fetchBenficiary(int id) {
-//		
-//	}
 
 	public List<Customer> getAllCustomers() {
 
 		return customerRespository.findAll();
 		 
 	}
+	
 
-	public void deleteCustomerById(int customerId) {
-		Optional<Customer> customer = customerRespository.findById(customerId);
-		if (customer.isPresent()) {
-			customerRespository.delete(customer.get());
-		} else {
-//			throw new EntityNotFoundException("Customer not found.....");
-		}
-	}
-
-	public Customer updateCustomerById(int customerId, Customer customer) {
-		Optional<Customer> optionalCustomer = customerRespository.findById(customerId);
-		if (optionalCustomer.isPresent()) {
-			Customer existingCustomer = optionalCustomer.get();
-			existingCustomer.setAddharCardNumber(customer.getAddharCardNumber());
-			existingCustomer.setFirstName(customer.getFirstName());
-			existingCustomer.setDateOfBirth(customer.getDateOfBirth());
-			existingCustomer.setLastName(customer.getLastName());
-			existingCustomer.setEmail(customer.getEmail());
-			return customerRespository.save(existingCustomer);
-		}
-//		throw new EntityNotFoundException("User not found");
-	}
+	
+	
 
 }

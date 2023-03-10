@@ -39,11 +39,11 @@ public class Transaction  {
 //	@JsonIgnore
 //	private Account account;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="sender_account")
 	private Account senderAccount;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="receiver_account")
 	private Account receiverAccount;
 	
