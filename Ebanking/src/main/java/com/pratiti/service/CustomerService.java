@@ -130,7 +130,7 @@ public class CustomerService {
 
 
 	public Customer customerdetail(int customerid) {
-System.out.println(customerid);
+     System.out.println(customerid);
 		Optional<Customer> cust = customerRespository.findById(customerid);
 		Customer customer = cust.get();
 		return customer;

@@ -8,7 +8,7 @@ import com.pratiti.entity.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 	
-	public Optional<Customer> findByCustomerId(int customerid);
+//	public Optional<Customer> findByCustomerId(int customerid);
 	boolean existsByAddharCardNumber(int addharCardNumber);
 
 }
