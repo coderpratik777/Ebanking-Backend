@@ -193,13 +193,14 @@ public class CustomerController {
 	public Status addBeneficiary(@RequestBody BeneficiaryData beneficiaryData) {
 		Status status=new Status();
 		try {
-			//int id =beneficiaryData.getCutomerId();
-			//Customer cust=customerService.getCustomer(id);
+			int id =beneficiaryData.getCustomerId();
+			Customer cust=customerService.getCustomer(id);
+			System.out.println(cust);
 			Beneficiary beneficiary=new Beneficiary();
 			beneficiary.setAccountNumber(beneficiaryData.getAccountNumber());
 			beneficiary.setName(beneficiaryData.getName());
 			beneficiary.setNickName(beneficiaryData.getNickName());
-//			beneficiary.setCustomer(cust);
+			beneficiary.setCustomerBeneficiary(cust);
 			customerService.addBeneficiary(beneficiary);
 			status.setMesssageIfAny("Successfully added beneficiary !");
 			status.setStatus(true);
@@ -220,16 +221,13 @@ public class CustomerController {
 	
 	@GetMapping("/fetchbeneficiaries")
 	public List<Beneficiary> fetchBeneficiary(@RequestParam("customerid") int id) {
-		return customerService.fetchBenficiary(id);
+		List<Beneficiary> list=customerService.fetchBenficiary(id);
+		System.out.println(list.get(0));
+		System.out.println(list);
+		for(Beneficiary p:list) {
+			System.out.println(p.getName());
+		}
+		return list;
 	}
-
-
-	
-	
-//	@PostMapping("/forgot-user-id")
-//	@PostMapping("/forgot-password")
-//	@PostMapping("/set-new-password")
-//	
-//	
 
 }

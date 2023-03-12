@@ -197,6 +197,7 @@ public class CustomerService {
 	
 	public List<Beneficiary> fetchBenficiary(int id) {
 		List<Beneficiary> beneficiary=beneficiaryRepository.findByCustomerId(id);
+		System.out.println(beneficiary.get(0).getName());
 		return beneficiary;
 		
 	}

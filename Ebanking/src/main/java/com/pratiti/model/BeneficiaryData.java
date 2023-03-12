@@ -7,10 +7,10 @@ public class BeneficiaryData {
 	private String nickName;
 	private int customerId;
 	
-	public int getCutomerId() {
+	public int getCustomerId() {
 		return customerId;
 	}
-	public void setCutomerId(int customerId) {
+	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
 	public int getAccountNumber() {

@@ -30,6 +30,12 @@ public class TransactionController {
 		try {
 			int id =transactionService.transaction(transactionData);
 			status.setTransactionId(id);
+			status.setFromAccount(transactionData.getFromAccount());
+			status.setToAccount(transactionData.getToAccount());
+			status.setRemarks(transactionData.getRemark());
+			status.setMesssageIfAny("successfull transaction");
+			status.setTransactionMode(transactionData.getTransactionType());
+			status.setAmount(transactionData.getAmount());
 			status.setDate(transactionData.getTransactionDate());
 			status.setStatus(true);
 			
