@@ -22,7 +22,7 @@ import com.pratiti.repository.TransactionRepository;
 public class TransactionService {
 	
 	@Autowired
-	private TransactionRepository transactionRepoository;
+	private TransactionRepository transactionRepository;
 	
 	@Autowired
 	private AccountRepository accountRepository;
@@ -50,7 +50,7 @@ public class TransactionService {
 				transaction.setCustomer(acc.getCustomer());
 				transaction.setSenderAccount(acc);
 				transaction.setReceiverAccount(acc2);
-				transactionRepoository.save(transaction);
+				transactionRepository.save(transaction);
 				return transaction.getTransactionId();
 				
 			}
@@ -68,14 +68,14 @@ public class TransactionService {
 	
 	public List<Transaction> getTransactions(int customerid)
 	{
-		List<Transaction>trans=transactionRepoository.findByCustomer(customerid);
+		List<Transaction>trans=transactionRepository.findByCustomer(customerid);
 //		List<Transaction> transactions=trans.get();
 		
 		return trans;
 	}
 	
 	public List<Transaction> getTransactionsToAndFrom(Dates dates){
-		List<Transaction>trans=transactionRepoository.findTrans(dates.getDatefrom(), dates.getDateto(),dates.getCustomerid());
+		List<Transaction>trans=transactionRepository.findTrans(dates.getDatefrom(), dates.getDateto(),dates.getCustomerid());
 		return trans;
 		
 	}
