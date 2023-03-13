@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.pratiti.entity.Account;
 import com.pratiti.entity.Customer;
@@ -19,6 +20,7 @@ import com.pratiti.repository.CustomerRepository;
 import com.pratiti.repository.TransactionRepository;
 
 @Service
+@CrossOrigin
 public class TransactionService {
 	
 	@Autowired
