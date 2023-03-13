@@ -1,6 +1,6 @@
 package com.pratiti.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,8 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pratiti.entity.Customer.Status;
@@ -32,6 +31,7 @@ public class Customer  {
 	private int addharCardNumber;
 
 	@Column(name="date_of_birth")
+	
 	private Date dateOfBirth;
 
 	private String email;

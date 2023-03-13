@@ -30,9 +30,10 @@ public class TransactionService {
 	@Autowired
 	private CustomerRepository customerRepository;
 	
-	public int transaction(TransactionData data) {
+	public int transaction(TransactionData data,int amount) {
 		Optional<Account> account=accountRepository.findById(data.getFromAccount());
 		Optional<Account> account2=accountRepository.findById(data.getToAccount());
+		if(data.getAmount()<=amount) {
 		if(account.isPresent()) {
 			Account acc=new Account();
 			Account acc2=new Account();
@@ -62,6 +63,10 @@ public class TransactionService {
 		}
 		else {
 			throw new TransactionException("Something error occured!");
+		}
+		}
+		else {
+			throw new TransactionException("Amount is not valid !");
 		}
 	}
 	

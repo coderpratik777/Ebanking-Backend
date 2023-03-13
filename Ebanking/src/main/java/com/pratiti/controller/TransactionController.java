@@ -35,7 +35,31 @@ public class TransactionController {
 	public TransactionStatus initiateTransaction(@RequestBody TransactionData transactionData) {
 		TransactionStatus status=new TransactionStatus();
 		try {
-			int id =transactionService.transaction(transactionData);
+			int id =transactionService.transaction(transactionData,4000);
+			status.setTransactionId(id);
+			status.setFromAccount(transactionData.getFromAccount());
+			status.setToAccount(transactionData.getToAccount());
+			status.setRemarks(transactionData.getRemark());
+			status.setMesssageIfAny("successfull transaction");
+			status.setTransactionMode(transactionData.getTransactionType());
+			status.setAmount(transactionData.getAmount());
+			status.setDate(transactionData.getTransactionDate());
+			status.setStatus(true);
+			
+		}
+		catch(TransactionException e) {
+			status.setMesssageIfAny(e.getMessage());
+			status.setStatus(false);
+			
+		}
+		return status;
+		
+	}
+	@PostMapping("/transaction/rtgs")
+	public TransactionStatus initiateTransactionRtgs(@RequestBody TransactionData transactionData) {
+		TransactionStatus status=new TransactionStatus();
+		try {
+			int id =transactionService.transaction(transactionData,10000);
 			status.setTransactionId(id);
 			status.setFromAccount(transactionData.getFromAccount());
 			status.setToAccount(transactionData.getToAccount());

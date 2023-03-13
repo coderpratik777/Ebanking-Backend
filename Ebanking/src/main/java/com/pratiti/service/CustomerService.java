@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -106,7 +108,8 @@ public class CustomerService {
 	}
 
 	public Customer login(String username, String password) {
-		if (accountRepository.existsByUsername(username)) {
+		System.out.println(accountRepository.findByPassword(password));
+		if (accountRepository.existsByUsername(username) && accountRepository.findByPassword(password)!=null) {
 			Optional<Account> account = accountRepository.findByUsername(username);
 			Account accountdata = account.get();
 			if (accountdata.getCustomer().getStatus() != Status.INACTIVE) {
