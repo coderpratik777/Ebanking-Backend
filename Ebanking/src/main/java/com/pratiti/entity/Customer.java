@@ -59,7 +59,7 @@ public class Customer  {
 	private Address address;
 
 	//bi-directional many-to-one association to Beneficiary
-	@OneToMany(mappedBy="customer")
+	@OneToMany(mappedBy="customerBeneficiary")
 	@JsonIgnore
 	private List<Beneficiary> beneficiaries;
 
@@ -176,20 +176,6 @@ public class Customer  {
 
 	public void setBeneficiaries(List<Beneficiary> beneficiaries) {
 		this.beneficiaries = beneficiaries;
-	}
-
-	public Beneficiary addBeneficiary(Beneficiary beneficiary) {
-		getBeneficiaries().add(beneficiary);
-		beneficiary.setCustomer(this);
-
-		return beneficiary;
-	}
-
-	public Beneficiary removeBeneficiary(Beneficiary beneficiary) {
-		getBeneficiaries().remove(beneficiary);
-		beneficiary.setCustomer(null);
-
-		return beneficiary;
 	}
 
 	public List<Transaction> getTransactions() {

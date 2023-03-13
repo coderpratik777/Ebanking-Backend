@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Beneficiary  {
 	
@@ -27,7 +29,8 @@ public class Beneficiary  {
 	//bi-directional many-to-one association to Customer
 	@ManyToOne
 	@JoinColumn(name="customer_id")
-	private Customer customer;
+	@JsonIgnore
+	private Customer customerBeneficiary;
 
 	public Beneficiary() {
 	}
@@ -56,12 +59,22 @@ public class Beneficiary  {
 		this.nickName = nickName;
 	}
 
-	public Customer getCustomer() {
-		return this.customer;
+	public int getBeneficiary_id() {
+		return beneficiary_id;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setBeneficiary_id(int beneficiary_id) {
+		this.beneficiary_id = beneficiary_id;
 	}
+
+	public Customer getCustomerBeneficiary() {
+		return customerBeneficiary;
+	}
+
+	public void setCustomerBeneficiary(Customer customerBeneficiary) {
+		this.customerBeneficiary = customerBeneficiary;
+	}
+
+	
 
 }

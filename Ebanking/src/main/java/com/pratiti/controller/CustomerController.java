@@ -1,10 +1,8 @@
 package com.pratiti.controller;
 
-
 import javax.security.auth.login.AccountException;
 
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -41,7 +39,7 @@ public class CustomerController {
 
 	@Autowired
 	private AccountService accountService;
-	
+
 	@Autowired
 	private TransactionService transactionService;
 
@@ -63,7 +61,6 @@ public class CustomerController {
 
 		}
 	}
-
 
 //	@PostMapping("/login")
 //	public LoginStatus login(@RequestBody CustomerLoginData customerData) {
@@ -161,12 +158,10 @@ public class CustomerController {
 
 	@GetMapping("/userprofile")
 	public Customer customerdetail(@RequestParam int customerid) {
-		Customer cust =null;
-		
-			cust = customerService.customerdetail(customerid);
-			return cust;
-		
-		
+		Customer cust = null;
+
+		cust = customerService.customerdetail(customerid);
+		return cust;
 
 	}
 
@@ -178,7 +173,6 @@ public class CustomerController {
 		try {
 
 			stat = customerService.changepassword(passwordDetail);
-			
 
 		} catch (CustomerServiceException e) {
 			System.out.println(e.getMessage());
@@ -186,43 +180,51 @@ public class CustomerController {
 		return stat;
 
 	}
-	
+
 	@PostMapping("/addbeneficiary")
 	public Status addBeneficiary(@RequestBody BeneficiaryData beneficiaryData) {
-		Status status=new Status();
+		Status status = new Status();
 		try {
-			//int id =beneficiaryData.getCutomerId();
-			//Customer cust=customerService.getCustomer(id);
-			Beneficiary beneficiary=new Beneficiary();
+			int id = beneficiaryData.getCustomerId();
+			Customer cust = customerService.getCustomer(id);
+			System.out.println(cust);
+			Beneficiary beneficiary = new Beneficiary();
 			beneficiary.setAccountNumber(beneficiaryData.getAccountNumber());
 			beneficiary.setName(beneficiaryData.getName());
 			beneficiary.setNickName(beneficiaryData.getNickName());
-//			beneficiary.setCustomer(cust);
+			beneficiary.setCustomerBeneficiary(cust);
 			customerService.addBeneficiary(beneficiary);
 			status.setMesssageIfAny("Successfully added beneficiary !");
 			status.setStatus(true);
-			
-		}
-		catch(CustomerServiceException e) {
+
+		} catch (CustomerServiceException e) {
 			status.setMesssageIfAny(e.getMessage());
 			status.setStatus(false);
 		}
 		return status;
-		
+
 	}
+
 	@GetMapping("/fetchaccount")
 	public Account fetchAccount(@RequestParam("customerid") int id) {
-		 Account acc=customerService.getAccount(id);
-		 return acc;
+		Account acc = customerService.getAccount(id);
+		return acc;
 	}
-	
+
 //	@GetMapping("/fetchbeneficiaries")
 //	public List<Beneficiary> fetchBeneficiary(@RequestParam("customerid") int id) {
 //		return customerService.fetchBenficiary(id);
 //	}
 
-
-	
-	
+	@GetMapping("/fetchbeneficiaries")
+	public List<Beneficiary> fetchBeneficiary(@RequestParam("customerid") int id) {
+		List<Beneficiary> list = customerService.fetchBenficiary(id);
+		System.out.println(list.get(0));
+		System.out.println(list);
+		for (Beneficiary p : list) {
+			System.out.println(p.getName());
+		}
+		return list;
+	}
 
 }

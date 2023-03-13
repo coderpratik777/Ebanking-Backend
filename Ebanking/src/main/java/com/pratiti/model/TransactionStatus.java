@@ -10,6 +10,14 @@ public class TransactionStatus extends Status{
 	private int toAccount;
 	private Date date;
 	private String remarks;
+	private int amount;
+	
+	public int getAmount() {
+		return amount;
+	}
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
 	public int getTransactionId() {
 		return transactionId;
 	}
