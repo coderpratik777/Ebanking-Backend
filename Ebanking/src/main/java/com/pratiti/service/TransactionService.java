@@ -12,6 +12,7 @@ import com.pratiti.entity.Account;
 import com.pratiti.entity.Customer;
 import com.pratiti.entity.Transaction;
 import com.pratiti.exception.TransactionException;
+import com.pratiti.model.Dates;
 import com.pratiti.model.TransactionData;
 import com.pratiti.repository.AccountRepository;
 import com.pratiti.repository.CustomerRepository;
@@ -64,6 +65,20 @@ public class TransactionService {
 		}
 	}
 	
+	
+	public List<Transaction> getTransactions(int customerid)
+	{
+		List<Transaction>trans=transactionRepoository.findByCustomer(customerid);
+//		List<Transaction> transactions=trans.get();
+		
+		return trans;
+	}
+	
+	public List<Transaction> getTransactionsToAndFrom(Dates dates){
+		List<Transaction>trans=transactionRepoository.findTrans(dates.getDatefrom(), dates.getDateto(),dates.getCustomerid());
+		return trans;
+		
+	}
 	
 	
 	

@@ -197,6 +197,11 @@ public class CustomerService {
 		return customerRespository.findAll();
 		 
 	}
+
+//	public List<Beneficiary> fetchBenficiary(int id) {
+//		
+//		return null;
+//	}
 	
 
 	

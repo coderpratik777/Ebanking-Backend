@@ -216,10 +216,10 @@ public class CustomerController {
 		 return acc;
 	}
 	
-	@GetMapping("/fetchbeneficiaries")
-	public List<Beneficiary> fetchBeneficiary(@RequestParam("customerid") int id) {
-		return customerService.fetchBenficiary(id);
-	}
+//	@GetMapping("/fetchbeneficiaries")
+//	public List<Beneficiary> fetchBeneficiary(@RequestParam("customerid") int id) {
+//		return customerService.fetchBenficiary(id);
+//	}
 
 
 	
